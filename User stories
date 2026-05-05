@@ -1,1 +1,20 @@
 
+User Story
+As someone trying to stay consistent with my fitness,
+I want to log my daily workouts by recording the exercise type, how long I worked out, and how many calories I burned,
+so I can keep track of my progress and see how I’m improving over time.
+
+Acceptance Criteria
+
+There is a “Log Workout” button on the home screen that’s easy to find (no treasure hunt required).
+When I click it, a simple form pops up where I can enter my workout details.
+After submitting, my workout shows up in a list of saved activities.
+I can edit or delete any of my past workouts if I made a mistake or want to update something.
+My workout data is saved and still there when I come back later.
+
+Definition of Done
+
+All the above features work as expected.
+The code has been reviewed and approved through a GitHub Pull Request.
+Automated tests for creating, reading, updating, and deleting workouts are passing.
+The feature is live and working in the production environment.
