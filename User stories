@@ -10,8 +10,15 @@
 
 
 ## Feature 4: Vendor Fulfillment Dashboard (Alden)
-- As a kitchen staff member, I want to see incoming group orders organised by item type so that I can prepare orders efficiently without confusion.
-- As a kitchen staff member, I want the dashboard to automatically update when new orders come in so that I always see the latest order status without refreshing the page.
+### User Story
+As a kitchen staff member,
+I want to see incoming group orders organised by item type,
+So that I can prepare orders efficiently without confusion.
+
+#### Acceptance Criteria
+- Given there are incoming orders, when I open the dashboard, then I can see all orders grouped by item type (e.g. drinks, mains, sides)
+- Given a new order comes in, when it is submitted by a customer, then it appears on the dashboard under the correct item type
+- Given multiple orders exist, when I view the dashboard, then each item type is clearly separated and labelled
 
 ## Feature 5: Live Status Group Board
 
