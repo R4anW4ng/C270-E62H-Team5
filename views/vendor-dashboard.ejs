@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vendor Fulfillment Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h1>Vendor Fulfillment Dashboard</h1>
+    <% if (Object.keys(grouped).length === 0) { %>
+        <p>No orders yet.</p>
+    <% } else { %>
+        <% Object.keys(grouped).forEach(itemType => { %>
+            <div class="item-group">
+                <h2><%= itemType %></h2>
+                <table>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                    </tr>
+                    <% grouped[itemType].forEach(order => { %>
+                    <tr>
+                        <td><%= order.id %></td>
+                        <td><%= order.item_name %></td>
+                        <td><%= order.quantity %></td>
+                        <td><%= order.status %></td>
+                    </tr>
+                    <% }) %>
+                </table>
+            </div>
+        <% }) %>
+    <% } %>
+</body>
+</html>
