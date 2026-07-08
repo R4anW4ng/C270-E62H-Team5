@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atelier Menu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="page-shell">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">Atelier Menu</a>
+                <span class="navbar-text">Curated nutrition, beautifully filtered</span>
+            </div>
+        </nav>
+
+        <header class="hero-section">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-7">
+                    <span class="eyebrow">Feature 2 • Smart menu</span>
+                    <h1>Find your perfect plate with calm, confident precision.</h1>
+                    <p>Discover elevated meals tailored to your calorie, protein, carb, and fat goals. Every suggestion feels as polished as the dining room itself.</p>
+                    <div class="hero-badges">
+                        <span class="pill">Macro-friendly</span>
+                        <span class="pill">Restaurant-curated</span>
+                        <span class="pill">Gourmet feel</span>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="hero-card">
+                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80" alt="Elegant restaurant dining experience">
+                        <div class="hero-card__overlay">
+                            <h3>Tonight's mood</h3>
+                            <p>Balanced, indulgent, and effortlessly refined.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="row">
+                <div class="col-lg-3 mb-4">
+                    <div class="card filter-card">
+                        <div class="card-header">
+                            <h5>Nutrition filters</h5>
+                            <p>Dial in your ideal balance</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="filter-group mb-4">
+                                <label class="form-label fw-bold">
+                                    Calories: <span id="caloriesValue">1000</span> kcal
+                                </label>
+                                <input type="range" class="form-range" id="caloriesSlider"
+                                       min="0" max="1000" value="1000" step="50">
+                                <small>0 - 1000 kcal</small>
+                            </div>
+
+                            <div class="filter-group mb-4">
+                                <label class="form-label fw-bold">
+                                    Protein: <span id="proteinValue">100</span>g
+                                </label>
+                                <input type="range" class="form-range" id="proteinSlider"
+                                       min="0" max="100" value="100" step="5">
+                                <small>0 - 100g</small>
+                            </div>
+
+                            <div class="filter-group mb-4">
+                                <label class="form-label fw-bold">
+                                    Carbs: <span id="carbsValue">200</span>g
+                                </label>
+                                <input type="range" class="form-range" id="carbsSlider"
+                                       min="0" max="200" value="200" step="10">
+                                <small>0 - 200g</small>
+                            </div>
+
+                            <div class="filter-group mb-4">
+                                <label class="form-label fw-bold">
+                                    Fats: <span id="fatsValue">100</span>g
+                                </label>
+                                <input type="range" class="form-range" id="fatsSlider"
+                                       min="0" max="100" value="100" step="5">
+                                <small>0 - 100g</small>
+                            </div>
+
+                            <button class="btn btn-outline-secondary w-100" id="resetBtn">Reset filters</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9">
+                    <div class="results-panel">
+                        <div class="results-panel__top">
+                            <div>
+                                <span class="eyebrow">Curated picks</span>
+                                <h2>Available meals <span id="mealCount" class="badge"></span></h2>
+                            </div>
+                            <div class="search-panel">
+                                <label for="searchInput" class="form-label fw-bold">Search meals</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">🔍</span>
+                                    <input type="text" id="searchInput" class="form-control" placeholder="Search by meal or restaurant name">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="mealsContainer" class="row g-4">
+                            <!-- Meals will be loaded here by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script id="meal-data" type="application/json"><%- JSON.stringify(meals) %></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const allMeals = JSON.parse(document.getElementById('meal-data').textContent);
+        const imagePool = [
+            'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80',
+            'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80',
+            'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80',
+            'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80'
+        ];
+
+        const caloriesSlider = document.getElementById('caloriesSlider');
+        const proteinSlider = document.getElementById('proteinSlider');
+        const carbsSlider = document.getElementById('carbsSlider');
+        const fatsSlider = document.getElementById('fatsSlider');
+        const searchInput = document.getElementById('searchInput');
+
+        const caloriesValue = document.getElementById('caloriesValue');
+        const proteinValue = document.getElementById('proteinValue');
+        const carbsValue = document.getElementById('carbsValue');
+        const fatsValue = document.getElementById('fatsValue');
+
+        const mealsContainer = document.getElementById('mealsContainer');
+        const mealCount = document.getElementById('mealCount');
+        const resetBtn = document.getElementById('resetBtn');
+
+        caloriesSlider.addEventListener('input', (e) => {
+            caloriesValue.textContent = e.target.value;
+            filterMeals();
+        });
+
+        proteinSlider.addEventListener('input', (e) => {
+            proteinValue.textContent = e.target.value;
+            filterMeals();
+        });
+
+        carbsSlider.addEventListener('input', (e) => {
+            carbsValue.textContent = e.target.value;
+            filterMeals();
+        });
+
+        fatsSlider.addEventListener('input', (e) => {
+            fatsValue.textContent = e.target.value;
+            filterMeals();
+        });
+
+        searchInput.addEventListener('input', filterMeals);
+
+        resetBtn.addEventListener('click', () => {
+            caloriesSlider.value = 1000;
+            proteinSlider.value = 100;
+            carbsSlider.value = 200;
+            fatsSlider.value = 100;
+            searchInput.value = '';
+
+            caloriesValue.textContent = 1000;
+            proteinValue.textContent = 100;
+            carbsValue.textContent = 200;
+            fatsValue.textContent = 100;
+
+            filterMeals();
+        });
+
+        function filterMeals() {
+            const maxCalories = parseInt(caloriesSlider.value);
+            const maxProtein = parseInt(proteinSlider.value);
+            const maxCarbs = parseInt(carbsSlider.value);
+            const maxFats = parseInt(fatsSlider.value);
+            const searchTerm = searchInput.value.trim().toLowerCase();
+
+            const filtered = allMeals.filter(meal => {
+                const matchesSearch = !searchTerm ||
+                    String(meal.meal_name || '').toLowerCase().includes(searchTerm) ||
+                    String(meal.restaurant_name || '').toLowerCase().includes(searchTerm);
+
+                return matchesSearch &&
+                    meal.calories <= maxCalories &&
+                    meal.protein <= maxProtein &&
+                    meal.carbs <= maxCarbs &&
+                    meal.fats <= maxFats;
+            });
+
+            renderMeals(filtered);
+            mealCount.textContent = filtered.length;
+        }
+
+        function pickImage(mealName, restaurantName) {
+            const seed = `${mealName}${restaurantName}`.length % imagePool.length;
+            return imagePool[seed];
+        }
+
+        function renderMeals(meals) {
+            mealsContainer.innerHTML = '';
+
+            if (meals.length === 0) {
+                mealsContainer.innerHTML = '<div class="col-12"><div class="empty-state"><h4>No matches yet</h4><p>Try widening the sliders or changing your search term.</p></div></div>';
+                return;
+            }
+
+            meals.forEach(meal => {
+                const imageSrc = pickImage(meal.meal_name, meal.restaurant_name);
+                const mealCard = `
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card meal-card h-100">
+                            <div class="meal-card__image">
+                                <img src="${imageSrc}" alt="${meal.meal_name}">
+                                <span class="meal-card__chip">Featured</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="meal-card__header">
+                                    <div>
+                                        <h5 class="card-title">${meal.meal_name}</h5>
+                                        <p class="card-subtitle">${meal.restaurant_name}</p>
+                                    </div>
+                                    <span class="meal-card__score">Balanced</span>
+                                </div>
+                                <div class="nutrition-info">
+                                    <div class="nutrition-pill">
+                                        <span>Calories</span>
+                                        <strong>${meal.calories} kcal</strong>
+                                    </div>
+                                    <div class="nutrition-pill">
+                                        <span>Protein</span>
+                                        <strong>${meal.protein}g</strong>
+                                    </div>
+                                    <div class="nutrition-pill">
+                                        <span>Carbs</span>
+                                        <strong>${meal.carbs}g</strong>
+                                    </div>
+                                    <div class="nutrition-pill">
+                                        <span>Fats</span>
+                                        <strong>${meal.fats}g</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                mealsContainer.innerHTML += mealCard;
+            });
+        }
+
+        filterMeals();
+    </script>
+</body>
+</html>

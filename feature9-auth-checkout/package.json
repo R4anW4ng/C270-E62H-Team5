@@ -1,0 +1,16 @@
+{
+  "name": "feature9-auth-checkout",
+  "version": "1.0.0",
+  "description": "User Authentication and Order Checkout System",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "ejs": "^3.1.10",
+    "express": "^4.22.2",
+    "express-session": "^1.19.0",
+    "mysql2": "^3.22.5"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "smart-menu-app",
+  "version": "1.0.0",
+  "description": "Smart Metric-Filtered Menu - A Node.js + Express web app with dynamic meal filtering",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "express",
+    "ejs",
+    "mysql",
+    "nutrition",
+    "menu"
+  ],
+  "author": "alden1608",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "ejs": "^3.1.10",
+    "mysql2": "^3.6.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

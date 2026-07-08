@@ -1,0 +1,16 @@
+body {
+  background: #f5f7fb;
+  font-family: Arial, sans-serif;
+}
+
+.card {
+  border-radius: 16px;
+}
+
+.btn-primary, .btn-success {
+  border-radius: 10px;
+}
+
+.navbar {
+  margin-bottom: 1rem;
+}
